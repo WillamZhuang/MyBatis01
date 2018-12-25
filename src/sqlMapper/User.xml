@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- namespace：命名空间，用于隔离sql，还有一个很重要的作用，后面会讲 -->
-<mapper namespace="test">
+<mapper namespace="com.learning.mybatis.mapper.UserMapper">
 	<select id="findUserById" parameterType="Integer" resultType="com.learning.mybatis.pojo.User">
 		select * from user where id = #{v};
 	</select>
@@ -17,4 +17,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</selectKey>
 		insert into user (username,birthday,sex,address) values (#{username},#{birthday},#{sex},#{address})
 	</insert>
+	<!-- 更新用户 -->
+	<update id="updateUser" parameterType="com.learning.mybatis.pojo.User">
+		update user set username=#{username}, birthday=#{birthday} ,sex=#{sex} , address=#{address} where id=#{id}
+	</update>
+	<!-- 删除用户 -->
+	<delete id="deleteUserById" parameterType="Integer">
+		delete from user where id=#{id}
+	</delete>
 </mapper>

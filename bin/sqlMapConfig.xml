@@ -12,9 +12,9 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 			<dataSource type="POOLED">
 				<property name="driver" value="com.mysql.jdbc.Driver" />
 				<property name="url"
-					value="jdbc:mysql://localhost:3306/learning_mybatis?characterEncoding=utf-8" />
+					value="jdbc:mysql://localhost:3306/mybatistest?characterEncoding=utf-8" />
 				<property name="username" value="root" />
-				<property name="password" value="Willam123" />
+				<property name="password" value="dush123" />
 			</dataSource>
 		</environment>
 	</environments>
