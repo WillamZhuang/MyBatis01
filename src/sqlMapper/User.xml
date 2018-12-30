@@ -4,6 +4,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- namespace：命名空间，用于隔离sql，还有一个很重要的作用，后面会讲 -->
 <mapper namespace="com.learning.mybatis.mapper.UserMapper">
+	<sql id="selector">
+		select * from user
+	</sql>
+	
 	<select id="findUserById" parameterType="Integer" resultType="com.learning.mybatis.pojo.User">
 		select * from user where id = #{v};
 	</select>
@@ -25,4 +29,49 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="deleteUserById" parameterType="Integer">
 		delete from user where id=#{id}
 	</delete>
+	<!-- 用POJO包装类作为输入参数 -->
+	<select id="findUserByQueryVO" parameterType="QueryVO" resultType="User">
+		select * from user where username like "%${user.username}%"
+	</select>
+	
+	<!-- 输出简单类型参数 -->
+	<select id="count" resultType="Integer">
+		select count(*) from `user`;
+	</select>
+	
+	<!-- 动态sql之if判断 -->
+	<select id="findUserByUserNameandSex" parameterType="User" resultType="User">
+		select username,birthday,sex,address from user
+		<where>
+			<if test="username != null and username != ''">
+				and username = #{username}
+			</if>
+			<if test="sex != null and sex != ''">
+				and sex = #{sex}
+			</if>
+		</where>
+	</select>
+	
+	<!-- 动态sql之foreach -->
+	<select id="findUserByList" parameterType="QueryVO" resultType="User">
+		<include refid="selector"/>
+		<where>
+			<foreach collection="list" item="id" separator="," open="id in (" close=")">
+				#{id}
+			</foreach>
+		</where>
+	</select>
+	<resultMap type="User" id="user">
+		<id column="id" property="id"/>
+		<result column="username"  property="username"/>
+		<collection property="orderList" ofType="Order">
+			<id column="id" property="id"/>
+			<result column="user_id" property="userId"/>
+			<result column="number" property="number"/>
+		</collection>
+	</resultMap>
+	<!-- 一对多关联 -->
+	<select id="findUsers" resultMap="user">
+		SELECT o.id,o.user_id,o.number,o.createtime,o.note,u.username from `user` u LEFT JOIN `order` o ON o.user_id=u.id;
+	</select>
 </mapper>

@@ -2,6 +2,7 @@ package com.learning.mybatis.pojo;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 public class User implements Serializable{
 	
@@ -17,6 +18,17 @@ public class User implements Serializable{
 	private Date birthday;
 	
 	private String address;
+	
+	private List<Order> orderList;
+
+	
+	public List<Order> getOrderList() {
+		return orderList;
+	}
+
+	public void setOrderList(List<Order> orderList) {
+		this.orderList = orderList;
+	}
 
 	public Integer getId() {
 		return id;
@@ -61,7 +73,8 @@ public class User implements Serializable{
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", sex=" + sex
-				+ ", birthday=" + birthday + ", address=" + address + "]";
+				+ ", birthday=" + birthday + ", address=" + address
+				+ ", orderList=" + orderList + "]";
 	}
 	
 }
